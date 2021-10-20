@@ -92,7 +92,7 @@ assert testing_images.shape[1] == weights[0].shape[0]
 assert np.max(testing_labels) == (weights[1].shape[1] - 1)
 
 # Set current input by scaling first image
-current_input.vars["magnitude"].view[:] = testing_images[0] * INPUT_CURRENT_SCALE
+current_input.vars["magnitude"].view[:] = testing_images[5] * INPUT_CURRENT_SCALE
 
 # Upload
 current_input.push_var_to_device("magnitude")
@@ -122,7 +122,7 @@ fig, axes = plt.subplots(len(neuron_layers), sharex=True)
 # Loop through axes and their corresponding neuron populations
 for ax, spk, lyr in zip(axes, layer_spikes, neuron_layers):
     spike_ids = np.concatenate(spk)
-    spike_times = np.concatenate([np.ones_like(s) * i * TIMESTEP 
+    spike_times = np.concatenate([np.ones_like(s) * i * TIMESTEP
                                   for i, s in enumerate(spk)])
 
     # Plot spikes
@@ -131,13 +131,15 @@ for ax, spk, lyr in zip(axes, layer_spikes, neuron_layers):
     # Set title, axis labels
     ax.set_title(lyr.name)
     ax.set_ylabel("Spike number")
-    ax.set_xlim((0, PRESENT_TIMESTEPS * TIMESTEP))
-    ax.set_ylim((0, l.size))
+    #ax.set_xlim((0, PRESENT_TIMESTEPS * TIMESTEP))
+    #ax.set_ylim((0, l.size))
+
+    #ax.set_ymargin(0.2)
 
 
 # Add an x-axis label and translucent line showing the correct label
 axes[-1].set_xlabel("Time [ms]")
-axes[-1].hlines(testing_labels[0], xmin=0, xmax=PRESENT_TIMESTEPS,
+axes[-1].hlines(testing_labels[5], xmin=0, xmax=PRESENT_TIMESTEPS,
                 linestyle="--", color="gray", alpha=0.2)
 
 # Show plot
